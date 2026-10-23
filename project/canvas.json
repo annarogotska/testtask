@@ -1,0 +1,106 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Admin.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Admin",
+      "w": 1280,
+      "x": 4080,
+      "y": 0
+    },
+    "AuthMobile.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Sign in and register (mobile)",
+      "w": 390,
+      "x": 0,
+      "y": 1260
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Sign in and register",
+      "w": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "School.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "School",
+      "w": 1280,
+      "x": 1360,
+      "y": 0
+    },
+    "SchoolMobile.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "School (mobile)",
+      "w": 390,
+      "x": 470,
+      "y": 1260
+    },
+    "Volunteer.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Volunteer",
+      "w": 1280,
+      "x": 2720,
+      "y": 0
+    },
+    "VolunteerMobile.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Volunteer (mobile)",
+      "w": 390,
+      "x": 940,
+      "y": 1260
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-22T14:50:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "t1": {
+      "kind": "title1",
+      "maxW": 5360,
+      "text": "Imployable events: desktop",
+      "w": 240,
+      "x": 0,
+      "y": -260
+    },
+    "t2": {
+      "kind": "title1",
+      "maxW": 1330,
+      "text": "Mobile",
+      "w": 240,
+      "x": 0,
+      "y": 1000
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "School.dc.html",
+    "Volunteer.dc.html",
+    "Admin.dc.html",
+    "AuthMobile.dc.html",
+    "SchoolMobile.dc.html",
+    "VolunteerMobile.dc.html"
+  ],
+  "pages": [],
+  "title": "Imployable Events"
+}

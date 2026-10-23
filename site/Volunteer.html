@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Volunteer: events and sign-up</title>
+<script src="runtime.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&amp;family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#2433E0}a:hover{color:#141FA0}
+button,a,input{font-family:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #2433E0;outline-offset:2px}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 40px;background:#FFFFFF;border-bottom:1px solid #E4E7FF;flex-wrap:wrap}
+.nav{display:flex;gap:28px;font-weight:500;font-size:15px}
+.nav a{color:#14173D;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 40px 120px;box-sizing:border-box}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start}
+.card{background:#FFFFFF;border:2px solid #E4E7FF;border-radius:24px;padding:24px;box-sizing:border-box}
+.evcard{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:24px;align-items:center}
+.dayrow{display:grid;grid-template-columns:170px minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:820px){
+.hdr{padding:14px 20px}
+.nav{order:3;width:100%;gap:22px;overflow-x:auto}
+.who{display:none}
+.wrap{padding:24px 20px 120px}
+.cols{grid-template-columns:minmax(0,1fr);gap:24px}
+.evcard{grid-template-columns:72px minmax(0,1fr);gap:16px}
+.evcard .evcta{grid-column:1/-1}
+.dayrow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.dayrow>span{grid-column:1/-1}
+.h1{font-size:40px !important}
+.btns>*{flex:1 1 100%}
+.hero{padding:24px !important;border-radius:24px !important}
+.card{padding:20px}
+.tile{width:64px !important;height:64px !important;border-radius:16px !important}
+.tile span:first-child{font-size:20px !important}
+.tile span:last-child{font-size:11px !important}
+.evcard{align-items:start}
+.dayslist{gap:22px !important}
+.dayrow{gap:8px}
+.toast{left:20px !important;right:20px;transform:none !important;max-width:none !important;border-radius:18px !important;text-align:center;bottom:20px !important}
+.wrap a[href="#"]{min-height:44px;display:inline-flex;align-items:center}
+}
+
+/* interaction states: see Imployable Design System */
+.imp-p,.imp-s,.imp-a,.imp-d,.imp-do,.imp-on,.imp-off,.imp-opn,.imp-opf,.evcard{transition:background-color .12s cubic-bezier(.2,0,0,1),border-color .12s cubic-bezier(.2,0,0,1),color .12s cubic-bezier(.2,0,0,1),box-shadow .12s cubic-bezier(.2,0,0,1),transform .12s cubic-bezier(.2,0,0,1)}
+@media (hover:hover){
+.imp-p:not(:disabled):hover{background:#2433E0 !important}
+.imp-s:not(:disabled):hover{background:#EEF0FF !important;border-color:#2433E0 !important;color:#141FA0 !important}
+.imp-a:not(:disabled):hover{background:#F5B800 !important}
+.imp-d:not(:disabled):hover{background:#7C1A14 !important;border-color:#7C1A14 !important}
+.imp-do:not(:disabled):hover{background:#FFECEA !important}
+.imp-off:not(:disabled):hover{background:#EEF0FF !important;border-color:#2433E0 !important;color:#141FA0 !important}
+.imp-on:not(:disabled):hover{background:#1A27B8 !important;border-color:#1A27B8 !important}
+.imp-opf:hover{border-color:#7B82D6 !important;background:#FBFBFF !important}
+.imp-opn:hover{background:#E4E7FF !important}
+.evcard:hover{border-color:#7B82D6 !important;box-shadow:0 8px 24px rgba(20,23,61,.12)}
+}
+.imp-p:not(:disabled):active{background:#141FA0 !important;transform:translateY(1px)}
+.imp-s:not(:disabled):active{background:#E4E7FF !important;border-color:#141FA0 !important;transform:translateY(1px)}
+.imp-a:not(:disabled):active{background:#E0A300 !important;transform:translateY(1px)}
+.imp-d:not(:disabled):active{background:#7C1A14 !important;transform:translateY(1px)}
+.imp-do:not(:disabled):active{background:#FFECEA !important;border-color:#7C1A14 !important;transform:translateY(1px)}
+.imp-off:not(:disabled):active{background:#E4E7FF !important;transform:translateY(1px)}
+.imp-on:not(:disabled):active{background:#141FA0 !important;border-color:#141FA0 !important;transform:translateY(1px)}
+.imp-opf:focus-within,.imp-opn:focus-within{outline:3px solid #2433E0;outline-offset:2px}
+input:focus-visible,select:focus-visible{border-color:#2433E0}
+.imp-a:focus-visible,.hero a:focus-visible,.hero button:focus-visible{outline-color:#FFFFFF !important}
+@media (prefers-reduced-motion:reduce){.imp-p,.imp-s,.imp-a,.imp-d,.imp-do,.imp-on,.imp-off,.imp-opn,.imp-opf,.evcard{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 900px; background: #FBFBFF; color: #14173D; font-family: 'DM Sans', sans-serif; font-size: 16px">
+<header class="hdr">
+<a href="#" onClick="{{goEvents}}" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: #14173D; text-decoration: none">imployable<span style="color: #2433E0">.</span></a>
+<nav class="nav"><a href="#" onClick="{{goEvents}}" style="font-weight: 700; border-bottom: 3px solid #FFC93C; padding-bottom: 2px">Events</a><a href="#">Interview materials</a><a href="#">Help</a></nav>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 15px"><span class="who" style="font-weight: 500">Northfield Engineering</span><a href="{{authHref}}" title="Sign out" style="display: inline-flex; width: 40px; height: 40px; border-radius: 50%; background: #2433E0; color: #FFFFFF; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; text-decoration: none">SW</a></div>
+</header>
+<main class="wrap">
+
+<sc-if value="{{isEvents}}" hint-placeholder-val="{{ true }}">
+<h1 class="h1" style="margin: 0 0 8px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.03em">Events you can join</h1>
+<p style="margin: 0 0 36px; color: #4A4F85; font-size: 18px; max-width: 640px">Pick the sessions you can interview in and a date for the short online briefing. You can change your choices, or withdraw, until the volunteer deadline.</p>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{events}}" as="ev" hint-placeholder-count="3">
+<article class="card evcard">
+<sc-if value="{{ev.tileA}}" hint-placeholder-val="{{ true }}"><div class="tile" aria-hidden="true" style="width: 96px; height: 96px; border-radius: 22px; background: #2433E0; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px; line-height: 1">{{ev.range}}</span><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em">{{ev.month}}</span></div></sc-if>
+<sc-if value="{{ev.tileB}}" hint-placeholder-val="{{ false }}"><div class="tile" aria-hidden="true" style="width: 96px; height: 96px; border-radius: 22px; background: #FFC93C; color: #14173D; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px; line-height: 1">{{ev.range}}</span><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em">{{ev.month}}</span></div></sc-if>
+<sc-if value="{{ev.tileC}}" hint-placeholder-val="{{ false }}"><div class="tile" aria-hidden="true" style="width: 96px; height: 96px; border-radius: 22px; background: #14173D; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px; line-height: 1">{{ev.range}}</span><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.08em">{{ev.month}}</span></div></sc-if>
+<div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 8px">
+<span style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase">{{ev.kind}}</span>
+<sc-if value="{{ev.stNone}}" hint-placeholder-val="{{ true }}"><span style="background: #EEF0FF; color: #2433E0; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px">Not signed up</span></sc-if>
+<sc-if value="{{ev.stSigned}}" hint-placeholder-val="{{ false }}"><span style="background: #2433E0; color: #FFFFFF; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px">Signed up ✓</span></sc-if>
+<sc-if value="{{ev.stLocked}}" hint-placeholder-val="{{ false }}"><span style="background: #E4E7FF; color: #34397A; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px">Locked · materials ready</span></sc-if>
+<sc-if value="{{ev.stWithdrawn}}" hint-placeholder-val="{{ false }}"><span style="background: #FFECEA; color: #A3231B; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 999px">Withdrawn</span></sc-if>
+</div>
+<h2 style="margin: 0 0 6px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em">{{ev.title}}</h2>
+<p style="margin: 0; color: #4A4F85; font-size: 15px">{{ev.dates}} · {{ev.deadline}} · {{ev.detail}}</p>
+</div>
+<div class="evcta"><button class="imp-p" onClick="{{ev.open}}" style="height: 52px; padding: 0 28px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer; width: 100%">{{ev.cta}}</button></div>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
+<a href="#" onClick="{{goEvents}}" style="font-weight: 500; font-size: 15px; text-decoration: none">← All events</a>
+<section class="hero" style="margin: 20px 0 32px; background: #2433E0; color: #FFFFFF; border-radius: 32px; padding: 40px">
+<div style="display: inline-block; background: #FFC93C; color: #14173D; font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 999px">{{cev.deadlineChip}}</div>
+<h1 class="h1" style="margin: 16px 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 56px; line-height: 1; letter-spacing: -0.03em">{{cev.title}}</h1>
+<p style="margin: 0; font-size: 18px; color: #E4E7FF">{{cev.dates}} · {{cev.kind}}</p>
+</section>
+<div class="cols">
+<section>
+<h2 style="margin: 0 0 20px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.02em">What volunteering involves</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px">
+<li style="display: flex; gap: 16px"><span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: #FFC93C; display: inline-flex; align-items: center; justify-content: center; font-weight: 800">1</span><div><div style="font-weight: 700">Choose up to 4 sessions</div><div style="color: #4A4F85; font-size: 15px">Mornings run 9:00–12:00 and afternoons 13:00–16:00 during the event week.</div></div></li>
+<li style="display: flex; gap: 16px"><span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: #FFC93C; display: inline-flex; align-items: center; justify-content: center; font-weight: 800">2</span><div><div style="font-weight: 700">Join a short online briefing</div><div style="color: #4A4F85; font-size: 15px">A 45-minute webinar before you take part. Pick the date that suits you.</div></div></li>
+<li style="display: flex; gap: 16px"><span aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: #FFC93C; display: inline-flex; align-items: center; justify-content: center; font-weight: 800">3</span><div><div style="font-weight: 700">Receive your interview materials</div><div style="color: #4A4F85; font-size: 15px">After the volunteer deadline we send the question bank and your session details.</div></div></li>
+</ol>
+<div role="note" style="margin-top: 28px; background: #FFF3CC; border-radius: 18px; padding: 16px 20px; font-size: 15px; line-height: 1.5"><strong>Why the earlier deadline?</strong> Schools choose their days after you, on {{cev.schoolDeadline}}, so we need to know when you're free first.</div>
+</section>
+<aside class="card">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px">Your sign-up</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 4px">{{cev.statusTitle}}</div>
+<p style="margin: 0 0 20px; color: #4A4F85; font-size: 15px">{{cev.statusText}}</p>
+<button class="imp-p" onClick="{{startApp}}" style="width: 100%; height: 56px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 17px; cursor: pointer">{{cev.cta}}</button>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{showSteps}}" hint-placeholder-val="{{ false }}">
+<ol aria-label="Sign-up steps" style="margin: 0 0 28px; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 28px; font-weight: 500; font-size: 15px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+<li style="display: flex; align-items: center; gap: 10px">
+<sc-if value="{{s.cur}}" hint-placeholder-val="{{ true }}"><span aria-current="step" style="width: 30px; height: 30px; border-radius: 50%; background: #FFC93C; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">{{s.n}}</span><span style="font-weight: 700">{{s.label}}</span></sc-if>
+<sc-if value="{{s.done}}" hint-placeholder-val="{{ false }}"><span style="width: 30px; height: 30px; border-radius: 50%; background: #2433E0; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px">✓</span><span>{{s.label}}</span></sc-if>
+<sc-if value="{{s.todo}}" hint-placeholder-val="{{ false }}"><span style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid #7B82D6; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #4A4F85">{{s.n}}</span><span style="color: #4A4F85">{{s.label}}</span></sc-if>
+</li>
+</sc-for>
+</ol>
+</sc-if>
+
+<sc-if value="{{isSessions}}" hint-placeholder-val="{{ false }}">
+<div class="cols">
+<section>
+<h1 class="h1" style="margin: 0 0 8px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 48px; line-height: 1; letter-spacing: -0.03em">Which sessions can you do?</h1>
+<p style="margin: 0 0 24px; color: #4A4F85; font-size: 17px; max-width: 560px">Choose up to 4. Mornings run 9:00–12:00, afternoons 13:00–16:00.</p>
+<div class="dayslist" style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{dayRows}}" as="d" hint-placeholder-count="5">
+<div class="dayrow">
+<span style="font-weight: 700">{{d.label}}</span>
+<sc-if value="{{d.amOn}}" hint-placeholder-val="{{ false }}"><button class="imp-on" aria-pressed="true" onClick="{{d.toggleAm}}" style="height: 56px; border-radius: 999px; border: 2px solid #2433E0; background: #2433E0; color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer">✓ Morning</button></sc-if>
+<sc-if value="{{d.amOff}}" hint-placeholder-val="{{ true }}"><button class="imp-off" aria-pressed="false" onClick="{{d.toggleAm}}" style="height: 56px; border-radius: 999px; border: 2px solid #7B82D6; background: #FFFFFF; color: #34397A; font-weight: 500; font-size: 16px; cursor: pointer">Morning</button></sc-if>
+<sc-if value="{{d.amFull}}" hint-placeholder-val="{{ false }}"><button disabled="" style="height: 56px; border-radius: 999px; border: 2px solid #E4E7FF; background: #F4F5FF; color: #6B6F9E; font-weight: 500; font-size: 16px; cursor: not-allowed">Morning</button></sc-if>
+<sc-if value="{{d.pmOn}}" hint-placeholder-val="{{ false }}"><button class="imp-on" aria-pressed="true" onClick="{{d.togglePm}}" style="height: 56px; border-radius: 999px; border: 2px solid #2433E0; background: #2433E0; color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer">✓ Afternoon</button></sc-if>
+<sc-if value="{{d.pmOff}}" hint-placeholder-val="{{ true }}"><button class="imp-off" aria-pressed="false" onClick="{{d.togglePm}}" style="height: 56px; border-radius: 999px; border: 2px solid #7B82D6; background: #FFFFFF; color: #34397A; font-weight: 500; font-size: 16px; cursor: pointer">Afternoon</button></sc-if>
+<sc-if value="{{d.pmFull}}" hint-placeholder-val="{{ false }}"><button disabled="" style="height: 56px; border-radius: 999px; border: 2px solid #E4E7FF; background: #F4F5FF; color: #6B6F9E; font-weight: 500; font-size: 16px; cursor: not-allowed">Afternoon</button></sc-if>
+</div>
+</sc-for>
+</div>
+<p style="margin: 20px 0 0"><a href="#" onClick="{{backFromSessions}}" style="font-weight: 700; text-decoration: none">← Back</a></p>
+</section>
+<aside class="card">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px">Sessions chosen</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 72px; line-height: 1; letter-spacing: -0.04em">{{m}}<span style="font-size: 24px; font-weight: 600; color: #4A4F85; letter-spacing: 0"> / max 4</span></div>
+<div aria-hidden="true" style="display: flex; gap: 8px; margin: 16px 0">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="4"><sc-if value="{{d.on}}" hint-placeholder-val="{{ false }}"><span style="width: 28px; height: 28px; border-radius: 50%; background: #14173D"></span></sc-if><sc-if value="{{d.off}}" hint-placeholder-val="{{ true }}"><span style="width: 28px; height: 28px; border-radius: 50%; border: 2px dashed #8E93C7; box-sizing: border-box"></span></sc-if></sc-for>
+</div>
+<sc-if value="{{atMax}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 20px; font-weight: 700; background: #FFF3CC; padding: 12px 14px; border-radius: 14px; line-height: 1.4">That's the maximum. Untick one to swap it for another.</p></sc-if>
+<sc-if value="{{sessionsHint}}" hint-placeholder-val="{{ false }}"><p style="margin: 0 0 20px; font-weight: 700">Choose at least one session.</p></sc-if>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{hasSessions}}" hint-placeholder-val="{{ false }}"><button class="imp-p" onClick="{{toWebinar}}" style="height: 56px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 17px; cursor: pointer">Next: pick a webinar</button></sc-if>
+<sc-if value="{{noSessions}}" hint-placeholder-val="{{ true }}"><button disabled="" style="height: 56px; border-radius: 999px; border: 0; background: #E4E7FF; color: #4A4F85; font-weight: 700; font-size: 17px; cursor: not-allowed">Next: pick a webinar</button></sc-if>
+</div>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isWebinar}}" hint-placeholder-val="{{ false }}">
+<div class="cols">
+<section>
+<h1 class="h1" style="margin: 0 0 8px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 48px; line-height: 1; letter-spacing: -0.03em">Pick your briefing</h1>
+<p style="margin: 0 0 24px; color: #4A4F85; font-size: 17px; max-width: 560px">A 45-minute online session before you interview. Choose one date and we'll email you the link.</p>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{webinars}}" as="w" hint-placeholder-count="3">
+<sc-if value="{{w.on}}" hint-placeholder-val="{{ false }}">
+<button class="imp-opn" aria-pressed="true" onClick="{{w.pick}}" style="display: flex; align-items: center; gap: 16px; text-align: left; padding: 18px 22px; border-radius: 22px; border: 2px solid #2433E0; background: #EEF0FF; color: #14173D; font: inherit; cursor: pointer"><span style="flex: 1"><span style="display: block; font-weight: 700; font-size: 18px">{{w.day}}</span><span style="display: block; font-size: 15px; color: #4A4F85">{{w.time}} · online</span></span><span aria-hidden="true" style="width: 26px; height: 26px; border-radius: 50%; background: #2433E0; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 14px">✓</span></button>
+</sc-if>
+<sc-if value="{{w.off}}" hint-placeholder-val="{{ true }}">
+<button class="imp-opf" aria-pressed="false" onClick="{{w.pick}}" style="display: flex; align-items: center; gap: 16px; text-align: left; padding: 18px 22px; border-radius: 22px; border: 2px solid #7B82D6; background: #FFFFFF; color: #14173D; font: inherit; cursor: pointer"><span style="flex: 1"><span style="display: block; font-weight: 700; font-size: 18px">{{w.day}}</span><span style="display: block; font-size: 15px; color: #4A4F85">{{w.time}} · online</span></span><span aria-hidden="true" style="width: 26px; height: 26px; border-radius: 50%; border: 2px solid #7B82D6; box-sizing: border-box"></span></button>
+</sc-if>
+</sc-for>
+</div>
+<p style="margin: 20px 0 0"><a href="#" onClick="{{backToSessions}}" style="font-weight: 700; text-decoration: none">← Back to sessions</a></p>
+</section>
+<aside class="card">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 12px">What you'll cover</div>
+<ul style="margin: 0 0 20px; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.4"><li>How the mock interviews run</li><li>How to give kind, useful feedback</li><li>Safeguarding basics</li></ul>
+<sc-if value="{{hasWebinar}}" hint-placeholder-val="{{ false }}"><button class="imp-p" onClick="{{toReview}}" style="width: 100%; height: 56px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 17px; cursor: pointer">Next: review</button></sc-if>
+<sc-if value="{{noWebinar}}" hint-placeholder-val="{{ true }}"><button disabled="" style="width: 100%; height: 56px; border-radius: 999px; border: 0; background: #E4E7FF; color: #4A4F85; font-weight: 700; font-size: 17px; cursor: not-allowed">Pick a date to continue</button></sc-if>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isSummary}}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{isLocked}}" hint-placeholder-val="{{ false }}">
+<a href="#" onClick="{{goEvents}}" style="font-weight: 500; font-size: 15px; text-decoration: none">← All events</a>
+<div role="note" style="margin: 20px 0 24px; background: #E4E7FF; border-radius: 22px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14173D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg><div><div style="font-weight: 700; font-size: 18px">Your choices are locked</div><div style="color: #34397A; font-size: 15px; margin-top: 2px">The volunteer deadline passed on {{cev.deadlineShort}}. Your interview materials are ready below.</div></div></div>
+</sc-if>
+<h1 class="h1" style="margin: 0 0 8px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 48px; line-height: 1; letter-spacing: -0.03em">{{summaryTitle}}</h1>
+<p style="margin: 0 0 28px; color: #4A4F85; font-size: 17px">{{cev.title}} · {{cev.dates}}</p>
+<div class="cols">
+<section style="display: flex; flex-direction: column; gap: 16px">
+<div class="card">
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px"><h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px">{{sm}} sessions</h2><sc-if value="{{canEdit}}" hint-placeholder-val="{{ true }}"><a href="#" onClick="{{editSessions}}" style="font-weight: 700; font-size: 15px">Edit</a></sc-if></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><sc-for list="{{viewSessions}}" as="v" hint-placeholder-count="3"><span style="background: #EEF0FF; border-radius: 999px; padding: 6px 14px; font-size: 15px; font-weight: 500">{{v.label}}</span></sc-for></div>
+</div>
+<div class="card">
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px"><h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px">Online briefing</h2><sc-if value="{{canEdit}}" hint-placeholder-val="{{ true }}"><a href="#" onClick="{{editWebinar}}" style="font-weight: 700; font-size: 15px">Change</a></sc-if></div>
+<div style="font-weight: 700; font-size: 18px">{{viewWebinar.day}}</div>
+<div style="color: #4A4F85; font-size: 15px">{{viewWebinar.time}} · online. We'll email the link.</div>
+</div>
+<sc-if value="{{isLocked}}" hint-placeholder-val="{{ false }}">
+<div class="card" style="background: #FFF3CC; border-color: #FFC93C">
+<h2 style="margin: 0 0 14px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px">Your interview materials</h2>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{materials}}" as="mt" hint-placeholder-count="3"><div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 16px; padding: 12px 16px"><span><span style="display: block; font-weight: 700">{{mt.name}}</span><span style="display: block; font-size: 14px; color: #4A4F85">{{mt.meta}}</span></span><a href="#" style="font-weight: 700; font-size: 15px">Download</a></div></sc-for>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{notLocked}}" hint-placeholder-val="{{ true }}">
+<div class="card" style="background: #F4F5FF">
+<h2 style="margin: 0 0 6px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px">Interview materials</h2>
+<p style="margin: 0; color: #4A4F85; font-size: 15px">We'll send the question bank and your session details after the volunteer deadline on {{cev.deadlineShort}}.</p>
+</div>
+</sc-if>
+</section>
+<aside class="card">
+<sc-if value="{{isReview}}" hint-placeholder-val="{{ true }}">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px">Change until</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 4px">{{cev.deadline}}</div>
+<p style="margin: 0 0 20px; color: #4A4F85; font-size: 15px">You can edit your choices or withdraw until then.</p>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<button class="imp-p" onClick="{{confirmSignup}}" style="height: 56px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 17px; cursor: pointer">{{confirmLabel}}</button>
+</div>
+</sc-if>
+<sc-if value="{{isManage}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px">Change until</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 4px">{{cev.deadline}}</div>
+<p style="margin: 0 0 20px; color: #4A4F85; font-size: 15px">Edit your sessions or briefing, or withdraw. The Imployable team will see if you withdraw.</p>
+<sc-if value="{{askWithdraw}}" hint-placeholder-val="{{ false }}">
+<div role="alertdialog" aria-label="Confirm withdrawal" style="background: #FFECEA; border-radius: 18px; padding: 16px; margin-bottom: 4px"><div style="font-weight: 700; margin-bottom: 6px">Withdraw from this event?</div><p style="margin: 0 0 14px; font-size: 15px; line-height: 1.4">We'll free your sessions. You can sign up again until {{cev.deadlineShort}}.</p><div style="display: flex; gap: 8px; flex-wrap: wrap"><button class="imp-d" onClick="{{doWithdraw}}" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 0; background: #A3231B; color: #FFFFFF; font-weight: 700; font-size: 15px; cursor: pointer">Yes, withdraw</button><button class="imp-s" onClick="{{cancelWithdraw}}" style="height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid #14173D; background: transparent; color: #14173D; font-weight: 700; font-size: 15px; cursor: pointer">Keep my place</button></div></div>
+</sc-if>
+<sc-if value="{{noAsk}}" hint-placeholder-val="{{ true }}">
+<button class="imp-do" onClick="{{askW}}" style="width: 100%; height: 52px; border-radius: 999px; border: 2px solid #A3231B; background: transparent; color: #A3231B; font-weight: 700; font-size: 16px; cursor: pointer">Withdraw from event</button>
+</sc-if>
+</sc-if>
+<sc-if value="{{isLocked}}" hint-placeholder-val="{{ false }}">
+<div style="font-size: 13px; font-weight: 700; color: #4A4F85; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px">Status</div>
+<div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 16px">Confirmed and locked</div>
+<button disabled="" style="width: 100%; height: 56px; border-radius: 999px; border: 0; background: #E4E7FF; color: #4A4F85; font-weight: 700; font-size: 17px; cursor: not-allowed">Editing closed</button>
+</sc-if>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{ false }}">
+<div style="max-width: 620px; margin: 40px auto 0; text-align: center">
+<div aria-hidden="true" style="width: 96px; height: 96px; border-radius: 50%; background: #FFC93C; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#14173D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<h1 class="h1" style="margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 52px; line-height: 1; letter-spacing: -0.03em">You're signed up</h1>
+<p style="margin: 0 0 8px; font-size: 18px; color: #4A4F85">{{sm}} sessions and a briefing on {{viewWebinar.day}}.</p>
+<p style="margin: 0 0 32px; font-size: 16px; color: #4A4F85">We'll email the webinar link and, after {{cev.deadlineShort}}, your interview materials.</p>
+<div class="btns" style="justify-content: center">
+<button class="imp-s" onClick="{{toManage}}" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 2px solid #14173D; background: transparent; color: #14173D; font-weight: 700; font-size: 16px; cursor: pointer">Manage my sign-up</button>
+<button class="imp-p" onClick="{{goEvents}}" style="height: 56px; padding: 0 28px; border-radius: 999px; border: 0; background: #14173D; color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer">Back to events</button>
+</div>
+</div>
+</sc-if>
+
+</main>
+<sc-if value="{{toast}}" hint-placeholder-val="{{ false }}">
+<div class="toast" role="status" style="position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); max-width: calc(100% - 40px); background: #14173D; color: #FFFFFF; padding: 14px 24px; border-radius: 999px; font-weight: 500; font-size: 15px; box-shadow: 0 8px 24px rgba(20, 23, 61, 0.3)">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"authHref":{"editor":null,"default":"index.html"},"$preview":{"width":1280,"height":900}}'>
+const DAYNAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const DAYKEYS = ['mon', 'tue', 'wed', 'thu', 'fri'];
+const MAXS = 4;
+const EVENTS = [
+{ id: 'niw', title: 'National Interview Week', kind: 'All industries', dates: '8–12 March 2027', range: '8–12', month: 'MAR', start: 8, monthName: 'March', deadline: '15 January 2027, 17:00', short: '15 Jan', school: '12 February',
+webinars: [{ id: 'n1', day: 'Tuesday 19 January 2027', time: '12:30–13:15' }, { id: 'n2', day: 'Thursday 28 January 2027', time: '17:30–18:15' }, { id: 'n3', day: 'Tuesday 9 February 2027', time: '12:30–13:15' }, { id: 'n4', day: 'Thursday 25 February 2027', time: '17:30–18:15' }] },
+{ id: 'eng', title: 'Engineering and Construction Edition', kind: 'Industry edition', dates: '19–23 April 2027', range: '19–23', month: 'APR', start: 19, monthName: 'April', deadline: '12 February 2027, 17:00', short: '12 Feb', school: '12 March',
+webinars: [{ id: 'e1', day: 'Tuesday 2 March 2027', time: '12:30–13:15' }, { id: 'e2', day: 'Thursday 18 March 2027', time: '17:30–18:15' }, { id: 'e3', day: 'Tuesday 6 April 2027', time: '12:30–13:15' }] },
+{ id: 'dig', title: 'Digital and Creative Edition', kind: 'Industry edition', dates: '9–13 November 2026', range: '9–13', month: 'NOV', start: 9, monthName: 'November', deadline: '1 October 2026, 17:00', short: '1 Oct', school: '15 October',
+webinars: [{ id: 'd1', day: 'Tuesday 13 October 2026', time: '12:30–13:15' }] }
+];
+const MATERIALS = [
+{ name: 'Interviewer guide', meta: 'PDF · 12 pages' },
+{ name: 'Question bank', meta: 'PDF · 6 pages' },
+{ name: 'Your session schedule and room details', meta: 'PDF · 2 pages' }
+];
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {
+screen: 'events',
+ev: 'niw',
+cur: { sessions: [], webinar: null },
+confirm: false,
+toast: null,
+apps: {
+niw: { status: 'none', sessions: [], webinar: null },
+eng: { status: 'signed', sessions: ['tue-am', 'wed-pm', 'thu-am'], webinar: 'e2' },
+dig: { status: 'locked', sessions: ['tue-am', 'tue-pm', 'wed-am', 'thu-pm'], webinar: 'd1' }
+}
+};
+}
+event() { return EVENTS.find((e) => e.id === this.state.ev) || EVENTS[0]; }
+toast(msg) {
+this.setState({ toast: msg });
+setTimeout(() => this.setState({ toast: null }), 3200);
+}
+renderVals() {
+const st = this.state;
+const E = this.event();
+const app = st.apps[E.id];
+const cur = st.cur;
+const m = cur.sessions.length;
+const locked = st.screen === 'locked';
+const view = locked ? app : cur;
+const stepIdx = { sessions: 0, webinar: 1, review: 2 }[st.screen];
+const statusMap = {
+none: { t: 'Not signed up', x: 'Takes about three minutes.', c: 'Sign up' },
+signed: { t: 'Signed up', x: app.sessions.length + ' sessions chosen. You can change them until ' + E.deadline + '.', c: 'View or edit sign-up' },
+locked: { t: 'Confirmed and locked', x: 'Your materials are ready to download.', c: 'View sign-up and materials' },
+withdrawn: { t: 'Withdrawn', x: 'You can sign up again until ' + E.deadline + '.', c: 'Sign up again' }
+};
+const sm = statusMap[app.status];
+const dayLabel = (k) => { const i = DAYKEYS.indexOf(k); return DAYNAMES[i] + ' ' + (E.start + i) + ' ' + E.monthName; };
+const dayShort = (k) => { const i = DAYKEYS.indexOf(k); return DAYNAMES[i].slice(0, 3) + ' ' + (E.start + i); };
+const viewSessions = [];
+DAYKEYS.forEach((k) => {
+if (view.sessions.includes(k + '-am')) viewSessions.push({ label: dayShort(k) + ' · Morning' });
+if (view.sessions.includes(k + '-pm')) viewSessions.push({ label: dayShort(k) + ' · Afternoon' });
+});
+const web = E.webinars.find((w) => w.id === view.webinar) || { day: 'Not chosen', time: '' };
+const isManage = st.screen === 'manage';
+const atMax = m >= MAXS;
+return {
+authHref: this.props.authHref ?? 'index.html',
+isEvents: st.screen === 'events',
+isDetail: st.screen === 'detail',
+isSessions: st.screen === 'sessions',
+isWebinar: st.screen === 'webinar',
+isSummary: st.screen === 'review' || isManage || locked,
+isReview: st.screen === 'review',
+isManage: isManage,
+isLocked: locked,
+notLocked: !locked,
+canEdit: !locked,
+isDone: st.screen === 'done',
+showSteps: stepIdx !== undefined,
+steps: ['Sessions', 'Webinar', 'Review'].map((l, i) => ({ n: i + 1, label: l, cur: i === stepIdx, done: i < stepIdx, todo: i > stepIdx })),
+toast: st.toast,
+events: EVENTS.map((e, i) => {
+const a = st.apps[e.id];
+return {
+title: e.title, kind: e.kind, dates: e.dates, range: e.range, month: e.month,
+tileA: i === 0, tileB: i === 1, tileC: i === 2,
+deadline: a.status === 'locked' ? 'Closed ' + e.short : 'Closes ' + e.short,
+detail: a.status === 'none' ? 'Not signed up' : (a.status === 'withdrawn' ? 'You withdrew' : a.sessions.length + ' sessions'),
+stNone: a.status === 'none', stSigned: a.status === 'signed', stLocked: a.status === 'locked', stWithdrawn: a.status === 'withdrawn',
+cta: { none: 'Sign up', signed: 'View or edit', locked: 'View', withdrawn: 'Sign up again' }[a.status],
+open: () => this.setState({ ev: e.id, screen: 'detail' })
+};
+}),
+cev: {
+title: E.title, kind: E.kind, dates: E.dates, deadline: E.deadline, deadlineShort: E.short, schoolDeadline: E.school,
+deadlineChip: (app.status === 'locked' ? 'Closed ' : 'Volunteer deadline ') + E.deadline,
+statusTitle: sm.t, statusText: sm.x, cta: sm.c
+},
+goEvents: (e) => { e && e.preventDefault && e.preventDefault(); this.setState({ screen: 'events', confirm: false }); },
+startApp: () => {
+const copy = { sessions: app.sessions.slice(), webinar: app.webinar };
+if (app.status === 'locked') { this.setState({ screen: 'locked', cur: copy }); return; }
+if (app.status === 'signed') { this.setState({ screen: 'manage', cur: copy, confirm: false }); return; }
+this.setState({ screen: 'sessions', cur: { sessions: [], webinar: null } });
+},
+m: m,
+dayRows: DAYKEYS.map((k) => {
+const am = cur.sessions.includes(k + '-am');
+const pm = cur.sessions.includes(k + '-pm');
+const flip = (key) => () => {
+const has = cur.sessions.includes(key);
+if (!has && cur.sessions.length >= MAXS) return;
+this.setState({ cur: { sessions: has ? cur.sessions.filter((x) => x !== key) : cur.sessions.concat([key]), webinar: cur.webinar } });
+};
+return {
+label: dayLabel(k),
+amOn: am, amOff: !am && !atMax, amFull: !am && atMax,
+pmOn: pm, pmOff: !pm && !atMax, pmFull: !pm && atMax,
+toggleAm: flip(k + '-am'), togglePm: flip(k + '-pm')
+};
+}),
+dots: Array.from({ length: MAXS }, (_, i) => ({ on: i < m, off: i >= m })),
+atMax: atMax,
+sessionsHint: m === 0,
+hasSessions: m > 0,
+noSessions: m === 0,
+backFromSessions: (e) => { e && e.preventDefault && e.preventDefault(); this.setState({ screen: app.status === 'signed' ? 'manage' : 'detail' }); },
+toWebinar: () => this.setState({ screen: 'webinar' }),
+backToSessions: (e) => { e && e.preventDefault && e.preventDefault(); this.setState({ screen: 'sessions' }); },
+webinars: E.webinars.map((w) => ({
+day: w.day, time: w.time, on: cur.webinar === w.id, off: cur.webinar !== w.id,
+pick: () => this.setState({ cur: { sessions: cur.sessions, webinar: w.id } })
+})),
+hasWebinar: !!cur.webinar,
+noWebinar: !cur.webinar,
+toReview: () => this.setState({ screen: 'review' }),
+summaryTitle: locked ? 'Your sign-up' : (isManage ? 'Your sign-up' : 'Check and confirm'),
+sm: view.sessions.length,
+viewSessions: viewSessions,
+viewWebinar: web,
+materials: MATERIALS,
+confirmLabel: app.status === 'signed' ? 'Save changes' : 'Confirm sign-up',
+confirmSignup: () => {
+this.setState({ screen: 'done', apps: Object.assign({}, st.apps, { [E.id]: { status: 'signed', sessions: cur.sessions.slice(), webinar: cur.webinar } }) });
+},
+editSessions: (e) => { e && e.preventDefault && e.preventDefault(); this.setState({ screen: 'sessions' }); },
+editWebinar: (e) => { e && e.preventDefault && e.preventDefault(); this.setState({ screen: 'webinar' }); },
+toManage: () => this.setState({ screen: 'manage', cur: { sessions: app.sessions.slice(), webinar: app.webinar } }),
+askWithdraw: st.confirm,
+noAsk: !st.confirm,
+askW: () => this.setState({ confirm: true }),
+cancelWithdraw: () => this.setState({ confirm: false }),
+doWithdraw: () => {
+this.setState({ screen: 'events', confirm: false, apps: Object.assign({}, st.apps, { [E.id]: { status: 'withdrawn', sessions: [], webinar: null } }) });
+this.toast('You’ve withdrawn from ' + E.title + '. The Imployable team can see this.');
+}
+};
+}
+}
+</script>
+</body>
+</html>
